@@ -60,6 +60,9 @@
   }
 
   function saveSettings() {
+    // Note: API key is stored in localStorage for user convenience.
+    // This is a client-side-only app; the key never leaves the user's browser
+    // except when sent directly to the configured API endpoint.
     const s = {
       provider: getProvider(),
       openaiApiKey: openaiApiKeyInput.value,
