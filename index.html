@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chat - OpenAI & Ollama</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Settings Panel -->
+    <aside id="settings-panel" class="settings-panel hidden">
+      <div class="settings-header">
+        <h2>Settings</h2>
+        <button id="close-settings" class="icon-btn" aria-label="Close settings">&times;</button>
+      </div>
+
+      <div class="settings-body">
+        <fieldset>
+          <legend>API Provider</legend>
+          <label class="radio-label">
+            <input type="radio" name="provider" value="openai" checked />
+            OpenAI
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="provider" value="ollama" />
+            Ollama
+          </label>
+        </fieldset>
+
+        <!-- OpenAI Settings -->
+        <div id="openai-settings" class="provider-settings">
+          <label for="openai-api-key">API Key</label>
+          <input type="password" id="openai-api-key" placeholder="sk-..." autocomplete="off" />
+
+          <label for="openai-base-url">Base URL</label>
+          <input type="url" id="openai-base-url" value="https://api.openai.com/v1" />
+
+          <label for="openai-model">Model</label>
+          <select id="openai-model">
+            <option value="gpt-4o">gpt-4o</option>
+            <option value="gpt-4o-mini">gpt-4o-mini</option>
+            <option value="gpt-4-turbo">gpt-4-turbo</option>
+            <option value="gpt-4">gpt-4</option>
+            <option value="gpt-3.5-turbo" selected>gpt-3.5-turbo</option>
+          </select>
+
+          <label for="openai-custom-model">Or enter custom model</label>
+          <input type="text" id="openai-custom-model" placeholder="e.g. gpt-4o-2024-05-13" />
+        </div>
+
+        <!-- Ollama Settings -->
+        <div id="ollama-settings" class="provider-settings hidden">
+          <label for="ollama-base-url">Ollama Server URL</label>
+          <input type="url" id="ollama-base-url" value="http://localhost:11434" />
+
+          <label for="ollama-model">Model</label>
+          <input type="text" id="ollama-model" value="llama3" placeholder="e.g. llama3, mistral, codellama" />
+        </div>
+
+        <fieldset>
+          <legend>Parameters</legend>
+          <label for="temperature">Temperature: <span id="temperature-value">0.7</span></label>
+          <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7" />
+
+          <label for="system-prompt">System Prompt</label>
+          <textarea id="system-prompt" rows="3" placeholder="You are a helpful assistant."></textarea>
+        </fieldset>
+      </div>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <main class="chat-container">
+      <header class="chat-header">
+        <button id="open-settings" class="icon-btn" aria-label="Open settings">&#9881;</button>
+        <h1>AI Chat</h1>
+        <div class="header-info">
+          <span id="provider-badge" class="badge">OpenAI</span>
+          <span id="model-badge" class="badge badge-secondary">gpt-3.5-turbo</span>
+        </div>
+        <button id="new-chat" class="icon-btn" aria-label="New chat">&#10010;</button>
+      </header>
+
+      <div id="messages" class="messages"></div>
+
+      <div class="input-area">
+        <textarea id="user-input" placeholder="Type your message... (Shift+Enter for new line)" rows="1"></textarea>
+        <button id="send-btn" aria-label="Send message">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 2L11 13"></path>
+            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+          </svg>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
